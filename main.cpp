@@ -24,11 +24,16 @@ const int monDayMap[12] {
 
 int main() {
     int inYear;
-    cout << "Enter year to print the calendar for:\n";
-    cin >> inYear;
+    cout << "Enter year to print the calendar for (any year in [1800, ...) range):\n";
+    bool firstEntry = true;
+    do {
+        if (!firstEntry) cout << std::format("{} is not a valid year, provide a year in [1800, ...) range\n", inYear);
+        cin >> inYear;
+        firstEntry = false;
+    } while (inYear < 1800);
     
-    int daysPast = 0; int cntDir = inYear >= wdStart ? 1 : -1;
-    for (int y = 1800; y != inYear; y += cntDir) {
+    int daysPast = 0;
+    for (int y = 1800; y != inYear; y++) {
         daysPast += isLeap(y) ? 366 : 365; // leap years shift week day for the next year
     }
 
